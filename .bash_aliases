@@ -1,0 +1,5 @@
+alias webstorm='/opt/WebStorm-222.4345.14/bin/webstorm.sh'
+alias storm='/opt/WebStorm-222.4345.14/bin/webstorm.sh'
+alias bashrc='sudo vi /root/.bashrc'
+alias dikta='cd ~/Dropbox ; vi dikter.txt'
+alias mejl='python3 emailSimple.py'
