@@ -322,7 +322,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
-        function ()
+        functio ()
             awful.client.focus.history.previous()
             if client.focus then
                 client.focus:raise()
