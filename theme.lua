@@ -14,13 +14,13 @@ local theme = {}
 theme.font          = "sans 11"
 
 theme.bg_normal     = "#000000"
-theme.bg_focus      = "#dbf5a1"
+theme.bg_focus      = "#000000" --"#dbf5a1"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#000000"
+theme.fg_focus      = "#dbf5a1"--"#000000"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
@@ -44,13 +44,13 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- local taglist_square_size = dpi(4)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+--     taglist_square_size, theme.fg_normal
+-- )
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+--     taglist_square_size, theme.fg_normal
+-- )
 
 -- Variables set for theming notifications:
 -- notification_font
@@ -97,7 +97,8 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."zengarden.jpg"
+-- theme.wallpaper = themes_path.."zengarden.jpg"
+theme.wallpaper = "~/IMG_1773.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"

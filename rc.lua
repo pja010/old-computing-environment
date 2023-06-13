@@ -98,6 +98,7 @@ awful.layout.suit.tile.top.useless_gap = 10
 client.connect_signal("manage", function (c)
     c.shape = function(cr,w,h)
         gears.shape.rounded_rect(cr,w,h,15)
+        -- gears.shape.rounded_rect(cr,w,h,0)
     end
 end)
 
@@ -398,6 +399,13 @@ globalkeys = gears.table.join(
         {description = "volume down", group = "hotkeys"}),
     awful.key({}, "XF86AudioMute", function () awful.spawn("amixer -D pulse sset Master toggle") end,
         {description = "toggle mute", group = "hotkeys"})
+        ,
+    -- Arrow keys remapping
+    awful.key({"Mod5"}, "j", function () awful.key.fake_key_event("Down", true) end, {description = "arrow down", group = "custom"}),
+    awful.key({"Mod5"}, "k", function () awful.key.fake_key_event("Up", true) end, {description = "arrow up", group = "custom"}),
+    awful.key({"Mod5"}, "l", function () awful.key.fake_key_event("Right", true) end, {description = "arrow right", group = "custom"}),
+    awful.key({"Mod5"}, ";", function () awful.key.fake_key_event("Left", true) end, {description = "arrow left", group = "custom"})
+
 )
 
 clientkeys = gears.table.join(
@@ -642,5 +650,8 @@ end)
 -- Cmds to run on start
 awful.spawn.with_shell("picom &")
 awful.spawn.with_shell("buckle &")
+awful.spawn.with_shell("xinput set-prop \"13\" \"335\" 1")
+awful.spawn.with_shell("xmodmap ~/.Xmodmap &")
+awful.spawn.with_shell("xbindkeys &")
 
 
