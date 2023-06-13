@@ -210,7 +210,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    local names = { "  interface-workbench  ", "  freewriting  ", "  matchsticks  ", "  4  ", "  5  "}
+    local names = { "  interface-workbench  ", "  freewriting  ", "  matchsticks  ", "  inbox  ", "  5  "}
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
     local layouts = { l.floating, l.tile, l.floating, l.fair, l.max,
         l.floating, l.tile.left, l.floating, l.floating }
@@ -296,13 +296,15 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-    awful.key({ modkey,           }, "j",
+    -- awful.key({ modkey,           }, "j",
+    awful.key({ "Mod1" }, "Tab",
         function ()
             awful.client.focus.byidx( 1)
         end,
         {description = "focus next by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "k",
+    -- awful.key({ modkey,           }, "k",
+    awful.key({ "Mod1", "Shift" }, "Tab",
         function ()
             awful.client.focus.byidx(-1)
         end,
@@ -399,12 +401,13 @@ globalkeys = gears.table.join(
         {description = "volume down", group = "hotkeys"}),
     awful.key({}, "XF86AudioMute", function () awful.spawn("amixer -D pulse sset Master toggle") end,
         {description = "toggle mute", group = "hotkeys"})
-        ,
-    -- Arrow keys remapping
-    awful.key({"Mod5"}, "j", function () awful.key.fake_key_event("Down", true) end, {description = "arrow down", group = "custom"}),
-    awful.key({"Mod5"}, "k", function () awful.key.fake_key_event("Up", true) end, {description = "arrow up", group = "custom"}),
-    awful.key({"Mod5"}, "l", function () awful.key.fake_key_event("Right", true) end, {description = "arrow right", group = "custom"}),
-    awful.key({"Mod5"}, ";", function () awful.key.fake_key_event("Left", true) end, {description = "arrow left", group = "custom"})
+        -- ,
+    -- -- -- Arrow keys remapping - NOT working as of now
+    -- awful.key({}, "Left", function () awful.client.focus.bydirection("left") end),
+    -- awful.key({}, "Down", function () awful.client.focus.bydirection("down") end),
+    -- awful.key({}, "Up", function () awful.client.focus.bydirection("up") end),
+    -- awful.key({}, "Right", function () awful.client.focus.bydirection("right") end)
+
 
 )
 
@@ -653,5 +656,4 @@ awful.spawn.with_shell("buckle &")
 awful.spawn.with_shell("xinput set-prop \"13\" \"335\" 1")
 awful.spawn.with_shell("xmodmap ~/.Xmodmap &")
 awful.spawn.with_shell("xbindkeys &")
-
-
+awful.spawn.with_shell("~/.config/awesome/restore_apps.sh")
