@@ -11,8 +11,11 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
--- theme.font          = "sans 11"
-theme.font          = "Purisa 11"
+theme.font          = "sans 11"
+-- theme.font          = "Cutive Mono 13"
+-- theme.font          = "Ubuntu Mono 11"
+-- theme.font          = "Purisa 10"
+-- theme.font          = "Test Pitch,Test Pitch Semibold 11"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#000000" --"#dbf5a1"
@@ -20,7 +23,8 @@ theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#332922" --"#aaaaaa"
+-- theme.fg_normal     = "#332922" --"#aaaaaa"
+theme.fg_normal     = "#aaaaaa"
 theme.fg_focus      = "#dbf5a1"--"#000000"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"

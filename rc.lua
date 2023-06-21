@@ -97,7 +97,7 @@ awful.layout.suit.tile.top.useless_gap = 10
 
 client.connect_signal("manage", function (c)
     c.shape = function(cr,w,h)
-        gears.shape.rounded_rect(cr,w,h,15)
+        gears.shape.rounded_rect(cr,w,h,10)
         -- gears.shape.rounded_rect(cr,w,h,0)
     end
 end)
@@ -210,7 +210,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    local names = { "  interface-workbench  ", "  freewriting  ", "  matchsticks  ", "  inbox  ", "  5  "}
+    local names = { "    Workbench", "    Freewriting", "    Art", "    Inbox", "    Interface"}
     local l = awful.layout.suit  -- Just to save some typing: use an alias.
     local layouts = { l.floating, l.tile, l.floating, l.fair, l.max,
         l.floating, l.tile.left, l.floating, l.floating }
@@ -244,7 +244,8 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({ position = "top", screen = s })
     
     local spacer = wibox.widget.textbox()
-    spacer.forced_width = (screen[s].geometry.width / 2) - 350
+    spacer.forced_width = (screen[s].geometry.width / 2) - 350 -- middle pos
+    -- spacer.forced_width = (screen[s].geometry.width / 2) - mytextclock.width -- middle pos
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -271,6 +272,8 @@ awful.screen.connect_for_each_screen(function(s)
             -- mytextclock,
             -- s.mylayoutbox,
             spacer,
+            -- uptime_widget,
+            -- idle_time_widget
             -- mybattery -- TODO - define this
         },
     }
@@ -393,6 +396,10 @@ globalkeys = gears.table.join(
         {description = "increase brightness", group = "screen"}),
     awful.key({}, "XF86MonBrightnessDown", function () os.execute("sudo brightnessctl set 10%-") end,
         {description = "decrease brightness", group = "screen"}),
+
+    -- Turn of display
+    awful.key({ modkey }, "q", function () awful.spawn("xset dpms force off") end,
+        {description = "turn off the screen", group = "custom"}),
 
     -- Volume control
     awful.key({}, "XF86AudioRaiseVolume", function () awful.spawn("amixer -D pulse sset Master 5%+") end,
@@ -657,3 +664,42 @@ awful.spawn.with_shell("xinput set-prop \"13\" \"335\" 1")
 awful.spawn.with_shell("xmodmap ~/.Xmodmap &")
 awful.spawn.with_shell("xbindkeys &")
 awful.spawn.with_shell("~/.config/awesome/restore_apps.sh")
+
+
+-- Uptime widget (possible future project)
+local idle_time_widget = wibox.widget.textbox()
+local idle_time_seconds = 0
+local active_time_seconds = 0
+
+gears.timer.start_new(1, function()
+    -- Get the current idle time in seconds
+    local handle = io.popen("xprintidle")
+    local result = handle:read("*a")
+    handle:close()
+    
+    local current_idle_time_seconds = tonumber(result) / 1000 -- xprintidle returns milliseconds
+
+    -- If the idle time is less than before, the screen has been activated
+    if current_idle_time_seconds < idle_time_seconds then
+        -- Reset the active time
+        active_time_seconds = 0
+    end
+
+    idle_time_seconds = current_idle_time_seconds
+
+    -- If the screen is active, increment the active time
+    if idle_time_seconds < 5 then
+        active_time_seconds = active_time_seconds + 1
+    end
+
+    -- Calculate hours and minutes
+    local active_time_hours = math.floor(active_time_seconds / 3600)
+    local active_time_minutes = math.floor((active_time_seconds % 3600) / 60)
+
+    -- Update the widget
+    idle_time_widget.text = string.format("Active time: %02d:%02d", active_time_hours, active_time_minutes)
+    
+    -- Keep the timer running
+    return true
+end)
+
